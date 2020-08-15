@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="bg-light p-3">
+        <h1>{{user.prenom ~ ' ' ~ user.nom }}</h1>
+    </div>
+
+    <p>Email: <strong>{{ user.email }}</strong></p>
+
+    <div class="bg-light p-3 pt-5">
+        <h2>Modifier {{user.prenom ~ ' ' ~ user.nom }}</h2>
+    </div
+
+    {{form(form)}}
+
+{% endblock %}

@@ -1,12 +1,91 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+          integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"/>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <a href="{{ path('produit_index') }}" class="navbar-brand"><i class="fa fa-cube"></i>MaraMara<b>Shop</b></a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a href="{{ path('produit_index') }}" class="nav-item nav-link active"><i
+                            class="fa fa-home"></i><span>Produits</span></a>
+            </li>
+        </ul>
+    </div>
+    {% if app.user %}
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+            <div class="navbar-nav ml-auto">
+                <div class="nav-item dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action">
+                        {{app.user.prenom ~ ' ' ~ app.user.nom}} <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="{{ path('edit_etudiant', {'id': app.user.id}) }}" class="dropdown-item"><i class="fa fa-user-alt"></i>Modifier</a>
+                        <a href="{{ path('panier_commande') }}" class="dropdown-item"><i class="fa fa-history"></i>Commandes</a>
+                        <div class="divider dropdown-divider"></div>
+                        <a href="{{ path('app_logout') }}" class="dropdown-item"><i class="fa fa-sign-out-alt"></i>
+                            Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+            <div class="navbar-nav ml-auto">
+                <div class="nav-item dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action">
+                        Mon Compte <b class="caret"></b></a>
+                    <div class="dropdown-menu">
+                        <a href="{{ path('app_login') }}" class="dropdown-item"><i class="fa fa-user-alt"></i> Se connecter</a>
+                        <div class="divider dropdown-divider"></div>
+                        <a href="{{ path('app_register') }}" class="dropdown-item"><i class="fa fa-sign-in-alt"></i>
+                            S'enregister</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a href="{{ path('panier') }}" class="nav-item nav-link active"><i
+                        class="fa fa-shopping-cart"></i><span>Panier</span></a>
+        </li>
+    </ul>
+</nav>
+
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <p class="alert alert-{{ type }}">{{ message }}</p>
+    {% endfor %}
+{% endfor %}
+
+<div class="container pt-5">
+    {% block body %}{% endblock %}
+</div>
+
+{% block javascripts %}{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
 </html>

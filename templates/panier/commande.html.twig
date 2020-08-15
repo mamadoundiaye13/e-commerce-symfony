@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des commandes!{% endblock %}
+
+{% block body %}
+    <div class="bg-light p-3">
+        <h1>Vos commandes</h1>
+    </div>
+
+    {% if commandes | length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Montant</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.id }}</td>
+                    <td>En cours</td>
+                    <td>{{ commande.dateAchat | date() }}</td>
+                    <td>
+                        <a href="{{ path('edit_commande', {'id': commande.id}) }}" class="btn btn-primary btn-sm">
+                            Regarder
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Surprise, c'est vide !</p>
+    {% endif %}
+
+{% endblock %}
